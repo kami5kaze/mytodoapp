@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 var _pages = <Widget>[];
 
@@ -7,36 +8,42 @@ class Bottombar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PersistentTabView(
-        context,
-        screens: _pages,
-        items: [
-          PersistentBottomNavBarItem(
-            icon: const Icon(Icons.home),
-            activeColorPrimary: Colors.black,
-            inactiveColorPrimary: Colors.grey,
-          ),
-          PersistentBottomNavBarItem(
-            icon: const Icon(Icons.comment),
-            activeColorPrimary: Colors.black,
-            inactiveColorPrimary: Colors.grey,
-          ),
-          PersistentBottomNavBarItem(
-            icon: const Icon(Icons.account_circle),
-            activeColorPrimary: Colors.black,
-            inactiveColorPrimary: Colors.grey,
-          ),
-        ],
-        navBarStyle: NavBarStyle.simple,
-        backgroundColor: Colors.white,
-        decoration: NavBarDecoration(
-          border: Border.all(
-            width: 1,
-            color: Colors.grey,
-          ),
+    PersistentTabController _controller =
+        PersistentTabController(initialIndex: 1);
+
+    return PersistentTabView(
+      context,
+      controller: _controller,
+      screens: _pages,
+      items: _bottombaritems(),
+      navBarStyle: NavBarStyle.simple,
+      backgroundColor: Colors.white,
+      decoration: NavBarDecoration(
+        border: Border.all(
+          width: 1,
+          color: Colors.grey,
         ),
       ),
     );
+  }
+
+  List<PersistentBottomNavBarItem> _bottombaritems() {
+    return [
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.calendar_month_outlined),
+        activeColorPrimary: Colors.black,
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.home),
+        activeColorPrimary: Colors.black,
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.account_circle),
+        activeColorPrimary: Colors.black,
+        inactiveColorPrimary: Colors.grey,
+      ),
+    ];
   }
 }
