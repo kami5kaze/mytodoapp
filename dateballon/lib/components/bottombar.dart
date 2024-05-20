@@ -1,7 +1,10 @@
+import 'package:dateballon/dev/dev.dart';
 import "package:flutter/material.dart";
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
-var _pages = <Widget>[];
+var _pages = <Widget>[
+  Dev(),
+];
 
 class Bottombar extends StatelessWidget {
   Bottombar({Key? key}) : super(key: key);
@@ -9,7 +12,7 @@ class Bottombar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PersistentTabController _controller =
-        PersistentTabController(initialIndex: 1);
+        PersistentTabController(initialIndex: 0);
 
     return PersistentTabView(
       context,
