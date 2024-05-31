@@ -1,4 +1,4 @@
-import 'package:dateballon/components/bottombar.dart';
+import 'package:dateballon/components/bottombarFunc.dart';
 import 'package:dateballon/dev/dev.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +11,7 @@ class Myapp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: Dev(),
-      home: Bottombar(),
+      home: BottombarFunc(),
     );
   }
 }
