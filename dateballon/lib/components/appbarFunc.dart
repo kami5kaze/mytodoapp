@@ -1,12 +1,13 @@
 import "package:flutter/material.dart";
 
-class Appbar extends StatelessWidget {
-  const Appbar({Key? key}) : super(key: key);
+class AppbarFunc extends StatelessWidget implements PreferredSizeWidget {
+  const AppbarFunc({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       title: Text("Date Ballon"),
+      // centerTitle: false,
       backgroundColor: Colors.white.withOpacity(0.3),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -16,4 +17,7 @@ class Appbar extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
