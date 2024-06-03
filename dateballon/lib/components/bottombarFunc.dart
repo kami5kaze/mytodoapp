@@ -1,5 +1,6 @@
 import 'package:dateballon/dev/dev.dart';
 import 'package:dateballon/home.dart';
+import 'package:dateballon/paint/dateline.dart';
 import "package:flutter/material.dart";
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -7,8 +8,9 @@ var _pages = <Widget>[
   Dev(),
   Homepage(),
   Container(
-    child: Text("3"),
-  ),
+      child: CustomPaint(
+    painter: DateLinePainter(),
+  )),
 ];
 
 class BottombarFunc extends StatelessWidget {
