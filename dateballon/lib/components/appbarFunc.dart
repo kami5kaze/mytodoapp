@@ -6,7 +6,7 @@ class AppbarFunc extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text("Date Ballon"),
+      title: Text("Date Balloon"),
       // centerTitle: false,
       backgroundColor: Colors.white.withOpacity(0.3),
       shape: RoundedRectangleBorder(
