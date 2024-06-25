@@ -1,4 +1,5 @@
 import 'package:dateballon/components/balloon_card.dart';
+import 'package:dateballon/components/eventAddDialog.dart';
 import 'package:flutter/material.dart';
 
 class Dev extends StatelessWidget {
@@ -15,9 +16,13 @@ class Dev extends StatelessWidget {
           children: [
             Container(width: 100, height: 100, color: Colors.red),
             Container(
-              width: 100,
-              height: 100,
-              child: BalloonCard(title: 'title', time: 'time'),
+              width: 120,
+              height: 120,
+              child: BalloonCard(title: 'パターン認識', time: '6/10 10:30AM'),
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: AddDialog(context: context),
             ),
           ],
         ),

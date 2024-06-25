@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:auto_size_text/auto_size_text.dart';
 
 class BalloonCard extends StatelessWidget {
   final String title;
@@ -7,9 +8,10 @@ class BalloonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> day = time.split(' ');
     return Center(
       child: Container(
-        height: 100,
+        height: 110,
         width: 100,
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -22,9 +24,20 @@ class BalloonCard extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(top: 10),
-              child: Text(title),
+              child: AutoSizeText(
+                title,
+                maxLines: 1,
+                maxFontSize: 10.0,
+                minFontSize: 9.0,
+              ),
             ),
-            Text(time),
+            Text(
+              '${day[0]}\n ${day[1]}',
+              style: TextStyle(
+                fontSize: 12,
+              ),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),
