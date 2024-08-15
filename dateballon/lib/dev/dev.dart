@@ -1,8 +1,10 @@
 import 'package:dateballon/components/balloon_card.dart';
 import 'package:dateballon/components/eventAddDialog.dart';
+import 'package:dateballon/components/tImePikcer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class Dev extends StatelessWidget {
+class Dev extends HookWidget {
   const Dev({Key? key}) : super(key: key);
 
   @override
@@ -20,10 +22,10 @@ class Dev extends StatelessWidget {
               height: 120,
               child: BalloonCard(title: 'パターン認識', time: '6/10 10:30AM'),
             ),
+            AddDialog(),
             Container(
-              alignment: Alignment.center,
-              child: AddDialog(context: context),
-            ),
+              child: TimePicker(),
+            )
           ],
         ),
       ),
