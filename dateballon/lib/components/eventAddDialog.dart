@@ -117,7 +117,16 @@ class AddDialog extends HookWidget {
           Align(
             alignment: Alignment.bottomRight,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Event event = Event(
+                  title: titleEditingController.text,
+                  start: startTime.value,
+                  end: endTime.value,
+                  isWeekly: value.value,
+                );
+                onAddEvent(event);
+                Navigator.of(context).pop();
+              },
               child: Text('OK'),
             ),
           ),

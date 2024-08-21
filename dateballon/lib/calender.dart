@@ -1,6 +1,8 @@
 import "dart:collection";
 
 import "package:dateballon/components/appbarFunc.dart";
+import "package:dateballon/components/event.dart";
+import "package:dateballon/components/eventAddDialog.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter/painting.dart";
@@ -35,6 +37,14 @@ class _CalenderPageState extends State<CalenderPage> {
         'Event D8',
       ],
     };
+  }
+
+  void addEvent(Event event) {
+    if (_eventList[event.start] != null) {
+      _eventList[event.start]!.add(event);
+    } else {
+      // _eventList[event.start] = [event];
+    }
   }
 
   @override
@@ -114,7 +124,16 @@ class _CalenderPageState extends State<CalenderPage> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AddDialog(
+                      onAddEvent: (event) {
+                        addEvent(event);
+                      },
+                    ),
+                  );
+                },
               ),
             ),
           ),

@@ -22,7 +22,7 @@ class Dev extends HookWidget {
               height: 120,
               child: BalloonCard(title: 'パターン認識', time: '6/10 10:30AM'),
             ),
-            AddDialog(),
+            // AddDialog(onAddEvent: ,),
             Container(
               child: TimePicker(),
             )
