@@ -19,7 +19,7 @@ class _CalenderPageState extends State<CalenderPage> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  Map<DateTime, List> _eventList = {};
+  Map<DateTime, List<Event>> _eventList = {};
 
   int getHashCode(DateTime key) {
     return key.day * 1000000 + key.month * 10000 + key.year;
@@ -29,21 +29,15 @@ class _CalenderPageState extends State<CalenderPage> {
   void initState() {
     super.initState();
     _selectedDay = _focusedDay;
-    _eventList = {
-      DateTime.now().add(Duration.zero): [
-        'Event A8',
-        'Event B8',
-        'Event C8',
-        'Event D8',
-      ],
-    };
+    _eventList = {};
   }
 
   void addEvent(Event event) {
-    if (_eventList[event.start] != null) {
-      _eventList[event.start]!.add(event);
+    if (_eventList[_focusedDay] != null) {
+      _eventList[_focusedDay]!.add(event);
+      //開始時間が被っている時のエラーダイアログ
     } else {
-      // _eventList[event.start] = [event];
+      _eventList[_focusedDay] = [event];
     }
   }
 
@@ -93,8 +87,17 @@ class _CalenderPageState extends State<CalenderPage> {
             child: ListView(
               shrinkWrap: true,
               children: getEventForDay(_selectedDay!)
-                  .map((event) => ListTile(
-                        title: Text(event.toString()),
+                  .map((event) => Container(
+                        width: 100,
+                        margin:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 1),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: ListTile(
+                          title: Text(event.title),
+                        ),
                       ))
                   .toList(),
             ),
