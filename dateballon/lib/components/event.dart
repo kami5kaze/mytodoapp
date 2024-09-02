@@ -5,11 +5,13 @@ class Event {
   final TimeOfDay start;
   final TimeOfDay end;
   final bool isWeekly;
+  final bool isKadai;
 
   Event({
     required this.title,
     required this.start,
     required this.end,
     this.isWeekly = false,
+    this.isKadai = false,
   });
 }

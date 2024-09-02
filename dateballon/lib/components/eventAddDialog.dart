@@ -17,8 +17,13 @@ class AddDialog extends HookWidget {
       TimeOfDay(hour: startTime.value.hour + 1, minute: startTime.value.minute),
     );
     final value = useState(false);
-    void onChanged(bool newValue) {
+    final kadai = useState(false);
+    void onWeekChanged(bool newValue) {
       value.value = newValue;
+    }
+
+    void onKadaiChanged(bool newValue) {
+      kadai.value = newValue;
     }
 
     Future<TimeOfDay?> pickTimer(
@@ -44,7 +49,7 @@ class AddDialog extends HookWidget {
                   //タイトル
                   Text('イベント名:'),
                   Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(5),
                     child: Container(
                       width: 190,
                       height: 40,
@@ -73,7 +78,7 @@ class AddDialog extends HookWidget {
                 //コンポーネント化
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     child: ElevatedButton(
                       onPressed: () async {
                         final selectedSTime =
@@ -88,7 +93,7 @@ class AddDialog extends HookWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     child: ElevatedButton(
                       onPressed: () async {
                         final selectedETime =
@@ -104,14 +109,27 @@ class AddDialog extends HookWidget {
               ],
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('毎週', style: TextStyle(fontSize: 18)),
                   CupertinoSwitch(
-                    onChanged: onChanged,
+                    onChanged: onWeekChanged,
                     value: value.value,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('課題', style: TextStyle(fontSize: 18)),
+                  CupertinoSwitch(
+                    onChanged: onKadaiChanged,
+                    value: kadai.value,
                   ),
                 ],
               ),
@@ -129,6 +147,7 @@ class AddDialog extends HookWidget {
                       start: startTime.value,
                       end: endTime.value,
                       isWeekly: value.value,
+                      isKadai: kadai.value,
                     );
                     onAddEvent(event);
                     Navigator.of(context).pop();

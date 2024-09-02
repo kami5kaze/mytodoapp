@@ -36,6 +36,7 @@ class _CalenderPageState extends State<CalenderPage> {
     if (_eventList[_focusedDay] != null) {
       _eventList[_focusedDay]!.add(event);
       //開始時間が被っている時のエラーダイアログ
+      //毎週の予定の場合
     } else {
       _eventList[_focusedDay] = [event];
     }
