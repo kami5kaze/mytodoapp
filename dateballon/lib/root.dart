@@ -1,8 +1,9 @@
-import 'package:dateballon/components/bottombarFunc.dart';
-import 'package:dateballon/dev/dev.dart';
+import 'package:dateballon/login.dart';
 import 'package:flutter/material.dart';
 
 class Myapp extends StatelessWidget {
+  const Myapp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -11,7 +12,8 @@ class Myapp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: Dev(),
-      home: BottombarFunc(),
+      home: const LoginPage(),
+      // home: const BottombarPage(),
     );
   }
 }

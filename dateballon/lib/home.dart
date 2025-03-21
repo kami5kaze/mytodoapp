@@ -3,23 +3,23 @@ import "package:dateballon/paint/dateline.dart";
 import "package:flutter/material.dart";
 
 class Homepage extends StatelessWidget {
-  const Homepage({Key? key}) : super(key: key);
+  const Homepage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarFunc(),
-      body: Container(
+      appBar: const AppbarFunc(),
+      body: SizedBox(
         width: double.infinity,
         child: Stack(
           fit: StackFit.expand,
           children: [
             CustomPaint(
-              child: Image(
+              foregroundPainter: DateLinePainter(),
+              child: const Image(
                 image: AssetImage('lib/images/sky.png'),
                 fit: BoxFit.fill,
               ),
-              foregroundPainter: DateLinePainter(),
             ),
           ],
         ),

@@ -1,12 +1,11 @@
 import 'package:dateballon/components/event.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class AddDialog extends HookWidget {
   final Function(Event) onAddEvent;
-  AddDialog({required this.onAddEvent});
+  const AddDialog({super.key, required this.onAddEvent});
 
   @override
   Widget build(BuildContext context) {
@@ -37,26 +36,26 @@ class AddDialog extends HookWidget {
     }
 
     return Dialog(
-      child: Container(
+      child: SizedBox(
         height: 300,
         width: 400,
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Row(
                 children: [
                   //タイトル
-                  Text('イベント名:'),
+                  const Text('イベント名:'),
                   Padding(
-                    padding: EdgeInsets.all(5),
-                    child: Container(
+                    padding: const EdgeInsets.all(5),
+                    child: SizedBox(
                       width: 190,
                       height: 40,
                       //タイトル入力
                       child: TextField(
                         controller: titleEditingController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: '  title',
                           hintStyle: TextStyle(color: Colors.grey),
                           border: OutlineInputBorder(
@@ -78,7 +77,8 @@ class AddDialog extends HookWidget {
                 //コンポーネント化
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     child: ElevatedButton(
                       onPressed: () async {
                         final selectedSTime =
@@ -93,7 +93,8 @@ class AddDialog extends HookWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     child: ElevatedButton(
                       onPressed: () async {
                         final selectedETime =
@@ -109,11 +110,11 @@ class AddDialog extends HookWidget {
               ],
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('毎週', style: TextStyle(fontSize: 18)),
+                  const Text('毎週', style: TextStyle(fontSize: 18)),
                   CupertinoSwitch(
                     onChanged: onWeekChanged,
                     value: value.value,
@@ -122,11 +123,11 @@ class AddDialog extends HookWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('課題', style: TextStyle(fontSize: 18)),
+                  const Text('課題', style: TextStyle(fontSize: 18)),
                   CupertinoSwitch(
                     onChanged: onKadaiChanged,
                     value: kadai.value,
@@ -135,7 +136,7 @@ class AddDialog extends HookWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: ElevatedButton(
@@ -152,7 +153,7 @@ class AddDialog extends HookWidget {
                     onAddEvent(event);
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ),
             ),

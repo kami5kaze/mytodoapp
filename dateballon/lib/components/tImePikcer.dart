@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class TimePicker extends HookWidget {
@@ -9,9 +8,11 @@ class TimePicker extends HookWidget {
   List<int> hours = List.generate(24, (index) => index + 1);
   List<int> minutes = List.generate(60, (index) => index);
 
+  TimePicker({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       children: [],
     );
   }

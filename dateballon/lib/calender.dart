@@ -3,14 +3,11 @@ import "dart:collection";
 import "package:dateballon/components/appbarFunc.dart";
 import "package:dateballon/components/event.dart";
 import "package:dateballon/components/eventAddDialog.dart";
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
-import "package:flutter/painting.dart";
-import "package:flutter/rendering.dart";
-import "package:flutter/widgets.dart";
 import "package:table_calendar/table_calendar.dart";
 
 class CalenderPage extends StatefulWidget {
+  const CalenderPage({super.key});
   @override
   _CalenderPageState createState() => _CalenderPageState();
 }
@@ -18,7 +15,7 @@ class CalenderPage extends StatefulWidget {
 class _CalenderPageState extends State<CalenderPage> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  CalendarFormat _calendarFormat = CalendarFormat.month;
+  final CalendarFormat _calendarFormat = CalendarFormat.month;
   Map<DateTime, List<Event>> _eventList = {};
 
   int getHashCode(DateTime key) {
@@ -45,17 +42,17 @@ class _CalenderPageState extends State<CalenderPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    final _events = LinkedHashMap<DateTime, List>(
+    final events = LinkedHashMap<DateTime, List>(
       equals: isSameDay,
       hashCode: getHashCode,
     )..addAll(_eventList);
 
     List getEventForDay(DateTime day) {
-      return _events[day] ?? [];
+      return events[day] ?? [];
     }
 
     return Scaffold(
-      appBar: AppbarFunc(),
+      appBar: const AppbarFunc(),
       body: Column(
         children: [
           TableCalendar(
@@ -80,7 +77,7 @@ class _CalenderPageState extends State<CalenderPage> {
             onPageChanged: (focusedDay) {
               _focusedDay = focusedDay;
             },
-            headerStyle: HeaderStyle(
+            headerStyle: const HeaderStyle(
               formatButtonVisible: false,
             ),
           ),
@@ -90,8 +87,8 @@ class _CalenderPageState extends State<CalenderPage> {
               children: getEventForDay(_selectedDay!)
                   .map((event) => Container(
                         width: 100,
-                        margin:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 20),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey, width: 1),
                           borderRadius: BorderRadius.circular(10),
@@ -106,21 +103,13 @@ class _CalenderPageState extends State<CalenderPage> {
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: ElevatedButton(
-                child: Center(
-                  child: Text(
-                    '+',
-                    style: TextStyle(
-                      fontSize: 25,
-                    ),
-                  ),
-                ),
                 style: ElevatedButton.styleFrom(
-                  fixedSize: Size(50, 50),
+                  fixedSize: const Size(50, 50),
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.black,
-                  shape: CircleBorder(
+                  shape: const CircleBorder(
                     side: BorderSide(
                       color: Colors.black,
                       width: 1,
@@ -138,6 +127,14 @@ class _CalenderPageState extends State<CalenderPage> {
                     ),
                   );
                 },
+                child: const Center(
+                  child: Text(
+                    '+',
+                    style: TextStyle(
+                      fontSize: 25,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),

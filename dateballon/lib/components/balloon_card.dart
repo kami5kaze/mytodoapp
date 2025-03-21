@@ -1,10 +1,10 @@
-import "package:flutter/material.dart";
 import 'package:auto_size_text/auto_size_text.dart';
+import "package:flutter/material.dart";
 
 class BalloonCard extends StatelessWidget {
   final String title;
   final String time;
-  const BalloonCard({required this.title, required String this.time});
+  const BalloonCard({super.key, required this.title, required this.time});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class BalloonCard extends StatelessWidget {
       child: Container(
         height: 110,
         width: 100,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('lib/images/balloon.png'),
             fit: BoxFit.fill,
@@ -23,7 +23,7 @@ class BalloonCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10),
               child: AutoSizeText(
                 title,
                 maxLines: 1,
@@ -33,7 +33,7 @@ class BalloonCard extends StatelessWidget {
             ),
             Text(
               '${day[0]}\n ${day[1]}',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12,
               ),
               textAlign: TextAlign.center,
