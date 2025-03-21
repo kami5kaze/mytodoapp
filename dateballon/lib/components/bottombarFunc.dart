@@ -1,3 +1,4 @@
+import 'package:dateballon/alarm.dart';
 import 'package:dateballon/calender.dart';
 import 'package:dateballon/dev/dev.dart';
 import 'package:dateballon/home.dart';
@@ -9,6 +10,7 @@ var _pages = <Widget>[
   CalenderPage(),
   Homepage(),
   Dev(),
+  AlarmPage(),
 ];
 
 class BottombarFunc extends StatelessWidget {
@@ -49,6 +51,11 @@ class BottombarFunc extends StatelessWidget {
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.account_circle),
+        activeColorPrimary: Colors.black,
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.alarm),
         activeColorPrimary: Colors.black,
         inactiveColorPrimary: Colors.grey,
       ),

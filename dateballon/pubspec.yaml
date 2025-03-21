@@ -44,6 +44,7 @@ dependencies:
   auto_size_text: ^3.0.0
   supabase_flutter: ^2.6.0
   flutter_dotenv: ^5.1.0
+  alarm: ^3.1.5
   #flutter_draw_dashed_line: ^1.0.0
 
 dev_dependencies:
