@@ -1,29 +1,30 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:dateballon/alarm.dart';
 import 'package:dateballon/calender.dart';
 import 'package:dateballon/dev/dev.dart';
 import 'package:dateballon/home.dart';
-import 'package:dateballon/paint/dateline.dart';
 import "package:flutter/material.dart";
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
-var _pages = <Widget>[
-  CalenderPage(),
-  Homepage(),
-  Dev(),
-  AlarmPage(),
+final List<Widget> _pages = [
+  const CalenderPage(),
+  const Homepage(),
+  const Dev(),
+  const AlarmPage(),
 ];
 
-class BottombarFunc extends StatelessWidget {
-  BottombarFunc({Key? key}) : super(key: key);
+@RoutePage()
+class BottombarPage extends StatelessWidget {
+  const BottombarPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    PersistentTabController _controller =
+    PersistentTabController controller =
         PersistentTabController(initialIndex: 1);
 
     return PersistentTabView(
       context,
-      controller: _controller,
+      controller: controller,
       screens: _pages,
       items: _bottombaritems(),
       navBarStyle: NavBarStyle.simple,
