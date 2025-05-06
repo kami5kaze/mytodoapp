@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class Errordialog extends StatelessWidget {
-  const Errordialog({super.key});
+class ErrorDialog extends HookWidget {
+  final String message;
+
+  const ErrorDialog({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('エラー'),
-      content: const Text('エラーが発生しました'),
+      content: Text(message),
       actions: <Widget>[
         TextButton(
           onPressed: () {

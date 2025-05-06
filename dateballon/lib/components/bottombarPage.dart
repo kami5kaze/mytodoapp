@@ -1,20 +1,12 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dateballon/alarm.dart';
 import 'package:dateballon/calender.dart';
-import 'package:dateballon/dev/dev.dart';
 import 'package:dateballon/home.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
-final List<Widget> _pages = [
-  const CalenderPage(),
-  const Homepage(),
-  const Dev(),
-  const AlarmPage(),
-];
-
 @RoutePage()
-class BottombarPage extends StatelessWidget {
+class BottombarPage extends HookWidget {
   const BottombarPage({super.key});
 
   @override
@@ -22,10 +14,15 @@ class BottombarPage extends StatelessWidget {
     PersistentTabController controller =
         PersistentTabController(initialIndex: 1);
 
+    final List<Widget> pages = [
+      CalenderPage(),
+      Homepage(),
+    ];
+
     return PersistentTabView(
       context,
       controller: controller,
-      screens: _pages,
+      screens: pages,
       items: _bottombaritems(),
       navBarStyle: NavBarStyle.simple,
       backgroundColor: Colors.white,
@@ -47,16 +44,6 @@ class BottombarPage extends StatelessWidget {
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.home),
-        activeColorPrimary: Colors.black,
-        inactiveColorPrimary: Colors.grey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(Icons.account_circle),
-        activeColorPrimary: Colors.black,
-        inactiveColorPrimary: Colors.grey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(Icons.alarm),
         activeColorPrimary: Colors.black,
         inactiveColorPrimary: Colors.grey,
       ),

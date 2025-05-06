@@ -3,53 +3,44 @@ import "dart:collection";
 import "package:dateballon/components/appbarFunc.dart";
 import "package:dateballon/components/event.dart";
 import "package:dateballon/components/eventAddDialog.dart";
+import "package:dateballon/components/fetchEvent.dart";
 import "package:flutter/material.dart";
+import "package:flutter_hooks/flutter_hooks.dart";
 import "package:table_calendar/table_calendar.dart";
 
-class CalenderPage extends StatefulWidget {
-  const CalenderPage({super.key});
-  @override
-  _CalenderPageState createState() => _CalenderPageState();
-}
-
-class _CalenderPageState extends State<CalenderPage> {
-  DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
+class CalenderPage extends HookWidget {
+  final _focusedDay = useState(DateTime.now());
+  final _selectedDay = useState(DateTime.now());
   final CalendarFormat _calendarFormat = CalendarFormat.month;
-  Map<DateTime, List<Event>> _eventList = {};
+  final _eventList = useState<Map<DateTime, List<Event>>>({});
+
+  CalenderPage({super.key});
 
   int getHashCode(DateTime key) {
     return key.day * 1000000 + key.month * 10000 + key.year;
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _selectedDay = _focusedDay;
-    _eventList = {};
-  }
-
-  void addEvent(Event event) {
-    if (_eventList[_focusedDay] != null) {
-      _eventList[_focusedDay]!.add(event);
-      //開始時間が被っている時のエラーダイアログ
-      //毎週の予定の場合
-    } else {
-      _eventList[_focusedDay] = [event];
-    }
+  Future<void> loadEvents() async {
+    final events = await fetchEventsFromSupabase();
+    final grouped = groupEventsByDate(events);
+    _eventList.value = grouped;
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     final events = LinkedHashMap<DateTime, List>(
       equals: isSameDay,
       hashCode: getHashCode,
-    )..addAll(_eventList);
+    )..addAll(_eventList.value);
 
     List getEventForDay(DateTime day) {
       return events[day] ?? [];
     }
+
+    useEffect(() {
+      loadEvents();
+      return null;
+    }, []);
 
     return Scaffold(
       appBar: const AppbarFunc(),
@@ -57,25 +48,22 @@ class _CalenderPageState extends State<CalenderPage> {
         children: [
           TableCalendar(
             //locale: 'ja_JP',
-            focusedDay: _focusedDay,
+            focusedDay: _focusedDay.value,
             firstDay: DateTime.utc(2023, 1, 1),
             lastDay: DateTime.utc(2043, 12, 31),
             eventLoader: getEventForDay,
             calendarFormat: _calendarFormat,
             selectedDayPredicate: (day) {
-              return isSameDay(_selectedDay, day);
+              return isSameDay(_selectedDay.value, day);
             },
             onDaySelected: (selectedDay, focusedDay) {
-              if (!isSameDay(_selectedDay, selectedDay)) {
-                setState(() {
-                  _selectedDay = selectedDay;
-                  _focusedDay = focusedDay;
-                });
-                getEventForDay(selectedDay);
+              if (!isSameDay(_selectedDay.value, selectedDay)) {
+                _selectedDay.value = selectedDay;
+                _focusedDay.value = focusedDay;
               }
             },
             onPageChanged: (focusedDay) {
-              _focusedDay = focusedDay;
+              _focusedDay.value = focusedDay;
             },
             headerStyle: const HeaderStyle(
               formatButtonVisible: false,
@@ -84,7 +72,7 @@ class _CalenderPageState extends State<CalenderPage> {
           Expanded(
             child: ListView(
               shrinkWrap: true,
-              children: getEventForDay(_selectedDay!)
+              children: getEventForDay(_selectedDay.value)
                   .map((event) => Container(
                         width: 100,
                         margin: const EdgeInsets.symmetric(
@@ -94,7 +82,17 @@ class _CalenderPageState extends State<CalenderPage> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: ListTile(
-                          title: Text(event.title),
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(event.title),
+                              if (event.isKadai || event.start == null)
+                                Text('~ ${_formatTime(event.end)}'),
+                              if (!event.isKadai)
+                                Text(
+                                    '${_formatTime(event.start)} ~ ${_formatTime(event.end)}'),
+                            ],
+                          ),
                         ),
                       ))
                   .toList(),
@@ -117,15 +115,16 @@ class _CalenderPageState extends State<CalenderPage> {
                     ),
                   ),
                 ),
-                onPressed: () {
-                  showDialog(
+                onPressed: () async {
+                  final result = await showDialog<bool>(
                     context: context,
                     builder: (context) => AddDialog(
-                      onAddEvent: (event) {
-                        addEvent(event);
-                      },
+                      selectedDay: _selectedDay.value,
                     ),
                   );
+                  if (result == true) {
+                    await loadEvents();
+                  }
                 },
                 child: const Center(
                   child: Text(
@@ -142,4 +141,11 @@ class _CalenderPageState extends State<CalenderPage> {
       ),
     );
   }
+}
+
+String _formatTime(TimeOfDay? time) {
+  if (time == null) return '';
+  final hour = time.hour.toString().padLeft(2, '0');
+  final minute = time.minute.toString().padLeft(2, '0');
+  return '$hour:$minute';
 }
