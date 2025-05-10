@@ -1,6 +1,7 @@
 import "dart:async";
 import "dart:math";
 
+import 'package:background_fetch/background_fetch.dart';
 import "package:dateballon/components/appbarFunc.dart";
 import "package:dateballon/components/balloon_card.dart";
 import "package:dateballon/components/balloon_position.dart";
@@ -20,11 +21,27 @@ class Homepage extends HookWidget {
     final existingLeftOffsets = <double>[];
 
     useEffect(() {
-      loadKadai();
-      final timer = Timer.periodic(const Duration(hours: 1), (_) {
-        loadKadai();
-      });
-      return timer.cancel;
+      BackgroundFetch.configure(
+        BackgroundFetchConfig(
+          minimumFetchInterval: 60,
+          stopOnTerminate: false,
+          enableHeadless: true,
+          requiresBatteryNotLow: false,
+          requiresCharging: false,
+          requiresStorageNotLow: false,
+          requiredNetworkType: NetworkType.NONE,
+        ),
+        (String taskId) async {
+          debugPrint("[BackgroundFetch] Task: $taskId");
+          await loadKadai();
+          BackgroundFetch.finish(taskId);
+        },
+        (String taskId) async {
+          BackgroundFetch.finish(taskId);
+        },
+      );
+
+      return null;
     }, []);
 
     return Scaffold(

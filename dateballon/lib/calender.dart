@@ -44,67 +44,74 @@ class CalenderPage extends HookWidget {
 
     return Scaffold(
       appBar: const AppbarFunc(),
-      body: Column(
+      body: Stack(
         children: [
-          TableCalendar(
-            //locale: 'ja_JP',
-            focusedDay: _focusedDay.value,
-            firstDay: DateTime.utc(2023, 1, 1),
-            lastDay: DateTime.utc(2043, 12, 31),
-            eventLoader: getEventForDay,
-            calendarFormat: _calendarFormat,
-            selectedDayPredicate: (day) {
-              return isSameDay(_selectedDay.value, day);
-            },
-            onDaySelected: (selectedDay, focusedDay) {
-              if (!isSameDay(_selectedDay.value, selectedDay)) {
-                _selectedDay.value = selectedDay;
-                _focusedDay.value = focusedDay;
-              }
-            },
-            onPageChanged: (focusedDay) {
-              _focusedDay.value = focusedDay;
-            },
-            headerStyle: const HeaderStyle(
-              formatButtonVisible: false,
-            ),
+          Column(
+            children: [
+              TableCalendar(
+                //locale: 'ja_JP',
+                focusedDay: _focusedDay.value,
+                firstDay: DateTime.utc(2023, 1, 1),
+                lastDay: DateTime.utc(2043, 12, 31),
+                eventLoader: getEventForDay,
+                calendarFormat: _calendarFormat,
+                selectedDayPredicate: (day) {
+                  return isSameDay(_selectedDay.value, day);
+                },
+                onDaySelected: (selectedDay, focusedDay) {
+                  if (!isSameDay(_selectedDay.value, selectedDay)) {
+                    _selectedDay.value = selectedDay;
+                    _focusedDay.value = focusedDay;
+                  }
+                },
+                onPageChanged: (focusedDay) {
+                  _focusedDay.value = focusedDay;
+                },
+                headerStyle: const HeaderStyle(
+                  formatButtonVisible: false,
+                ),
+              ),
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.only(bottom: 80),
+                  shrinkWrap: true,
+                  children: getEventForDay(_selectedDay.value)
+                      .map((event) => Container(
+                            width: 100,
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: ListTile(
+                              title: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(event.title),
+                                  if (event.isKadai || event.start == null)
+                                    Text('~ ${_formatTime(event.end)}'),
+                                  if (!event.isKadai)
+                                    Text(
+                                        '${_formatTime(event.start)} ~ ${_formatTime(event.end)}'),
+                                ],
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              children: getEventForDay(_selectedDay.value)
-                  .map((event) => Container(
-                        width: 100,
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 20),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 1),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(event.title),
-                              if (event.isKadai || event.start == null)
-                                Text('~ ${_formatTime(event.end)}'),
-                              if (!event.isKadai)
-                                Text(
-                                    '${_formatTime(event.start)} ~ ${_formatTime(event.end)}'),
-                            ],
-                          ),
-                        ),
-                      ))
-                  .toList(),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
+          Positioned(
+            bottom: 0,
+            right: 0,
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  fixedSize: const Size(50, 50),
+                  fixedSize: const Size(40, 40),
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.black,
                   shape: const CircleBorder(
