@@ -1,3 +1,4 @@
+import 'package:dateballon/notification/initialize_notifivation.dart';
 import 'package:dateballon/root.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -8,6 +9,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: '.env');
+
+  await initializeNotifications();
 
   // Initialize Supabase
   await Supabase.initialize(
