@@ -30,7 +30,7 @@ Future<void> scheduleDailyNotification(String bodyText) async {
           AndroidNotificationDetails('daily_channel', 'Daily Notification'),
       iOS: DarwinNotificationDetails(),
     ),
-    matchDateTimeComponents: null, //DateTimeComponents.time,
+    matchDateTimeComponents: DateTimeComponents.time,
     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
   );
 }
